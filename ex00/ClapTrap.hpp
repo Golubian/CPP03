@@ -8,12 +8,13 @@ class ClapTrap
 {
 	private:
 		std::string 	_name;
-		unsigned int	_health = 10;
-		unsigned int	_energy = 10;
-		unsigned int	_damage = 0;
+		unsigned int	_health;
+		unsigned int	_energy;
+		unsigned int	_damage;
 
 	public:
 		ClapTrap();
+		~ClapTrap();
 		ClapTrap(std::string name);
 		ClapTrap(ClapTrap &from);
 		ClapTrap& operator=(ClapTrap &from);
@@ -21,6 +22,7 @@ class ClapTrap
 		void	takeDamage(unsigned int amount);
 		void	beRepaired(unsigned int amount);
 
+		void	rename(std::string newName);
 		void	say(std::string message);
 };
 
