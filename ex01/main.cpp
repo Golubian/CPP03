@@ -4,8 +4,14 @@ int	main(void)
 {
 	ClapTrap leClap("CrapClap");
 	std::cout << std::endl;
-	ScavTrap leScav("ScavTrap");
+
+	ScavTrap leScav("Scav");
 	std::cout << std::endl;
+
+	ScavTrap leScav2;
+	leScav2 = leScav;
+	std::cout << std::endl;
+
 	leClap.attack(leScav);
 	std::cout << std::endl;
 	leScav.guardGate();

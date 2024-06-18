@@ -18,6 +18,19 @@ ScavTrap::ScavTrap(std::string name)
 	this->say("ScavTrap Unit ready to scrap!");
 }
 
+ScavTrap& ScavTrap::operator=(ScavTrap &from)
+{
+	if (this != &from)
+	{
+		this->_damage = from._damage;
+		this->_health = from._health;
+		this->_energy = from._energy;
+		this->_name = from._name;
+	}
+	this->say("ScavTrap Unit duplicated, copy online and running!");
+	return *this;
+}
+
 void	ScavTrap::attack(const std::string &target)
 {
 	if (_health == 0)
