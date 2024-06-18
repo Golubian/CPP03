@@ -15,6 +15,19 @@ ClapTrap::ClapTrap(ClapTrap &from)
 	*this = from;
 }
 
+ClapTrap& ClapTrap::operator=(ClapTrap &from)
+{
+	if (this != &from)
+	{
+		this->_damage = from._damage;
+		this->_health = from._health;
+		this->_energy = from._energy;
+		this->_name = from._name;
+	}
+	this->say("ClapTrap Unit duplicated, copy online and running!");
+	return *this;
+}
+
 ClapTrap::~ClapTrap()
 {
 	say("ClapTrap... unit... disabled.... [Destroyed]");
@@ -22,7 +35,7 @@ ClapTrap::~ClapTrap()
 
 void ClapTrap::say(std::string message)
 {
-	std::cout << "[" << _name << "]: " << message << std::endl; 
+	std::cout << "[C|" << _name << "]: " << message << std::endl; 
 }
 
 void	ClapTrap::attack(const std::string &target)
@@ -37,10 +50,28 @@ void	ClapTrap::attack(const std::string &target)
 		say("Take that, " + target + "! [-" + std::to_string(_damage) + " HP]");
 	}
 }
+
+void	ClapTrap::attack(ClapTrap &target)
+{
+	if (_health == 0)
+		say("ClapTrap unit under severe damage! Can't attack!!! HELP HELP HELP HELP!!!");
+	else if (_energy <= 0)
+		say("Can't attack! Insufficient energy!");
+	else
+	{
+		_energy--;
+		say("Take that, " + target.getName() + "! [" + std::to_string(_damage) + " DMG]");
+		target.takeDamage(_damage);
+	}
+}
+
 void	ClapTrap::takeDamage(unsigned int amount)
 {
-		say("Yeeoooouch!!! My bones!! [-" + std::to_string(amount) + " HP]");
-
+		if (amount > 0 && _health > 0)
+			say("Yeeoooouch!!! My bones!! [-" + std::to_string(amount) + " HP]");
+		else if (_health > 0)
+			say("That barely left a scratch! [NO DAMAGE]");
+		
 		if (_health > 0)
 		{
 			if (amount > _health)
@@ -73,15 +104,8 @@ void	ClapTrap::rename(std::string newName)
 	_name = newName;
 }
 
-ClapTrap& ClapTrap::operator=(ClapTrap &from)
+std::string	ClapTrap::getName()
 {
-	if (this != &from)
-	{
-		this->_damage = from._damage;
-		this->_health = from._health;
-		this->_energy = from._energy;
-		this->_name = from._name;
-	}
-	this->say("ClapTrap Unit duplicated, copy online and running!");
-	return *this;
+	return _name;
 }
+
